@@ -1,49 +1,19 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.1alexander-ai/ai-visibility-tracker",
+  "name": "io.github.postandrail/1alexander-tracker",
   "title": "1Alexander AI Visibility Tracker",
-  "description": "1Alexander AI visibility: persisted mentions, prompts, citations and competitor gaps.",
+  "description": "Track brand visibility on ChatGPT, Gemini and Perplexity. Manage brands, prompts and competitors.",
   "version": "1.0.0",
+  "repository": { "url": "https://github.com/1alexander-ai/ai-visibility-tracker-mcp", "source": "github" },
   "websiteUrl": "https://1alexander.ai/ai-visibility-tracker/mcp",
-  "repository": {
-    "url": "https://github.com/1alexander-ai/ai-visibility-tracker-mcp",
-    "source": "github"
-  },
-  "icons": [
-    {
-      "src": "https://raw.githubusercontent.com/1alexander-ai/ai-visibility-tracker-mcp/main/assets/logo-256.png",
-      "mimeType": "image/png",
-      "sizes": [
-        "256x256"
-      ]
-    },
-    {
-      "src": "https://raw.githubusercontent.com/1alexander-ai/ai-visibility-tracker-mcp/main/assets/logo.png",
-      "mimeType": "image/png",
-      "sizes": [
-        "512x512"
-      ]
-    },
-    {
-      "src": "https://raw.githubusercontent.com/1alexander-ai/ai-visibility-tracker-mcp/main/assets/logo-400.png",
-      "mimeType": "image/png",
-      "sizes": [
-        "400x400"
-      ]
-    }
-  ],
-  "remotes": [
-    {
-      "type": "streamable-http",
-      "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp",
-      "headers": [
-        {
-          "name": "Authorization",
-          "description": "Bearer 1at_<key> from tracker settings; omit for anonymous check_prompt.",
-          "isRequired": false,
-          "isSecret": true
-        }
-      ]
-    }
-  ]
+  "remotes": [{
+    "type": "streamable-http",
+    "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp",
+    "headers": [{
+      "name": "Authorization",
+      "description": "Use OAuth 2.1 with dynamic client registration and send the bearer access token. A workspace API key may also be sent as Bearer 1at_<key>.",
+      "isRequired": true,
+      "isSecret": true
+    }]
+  }]
 }

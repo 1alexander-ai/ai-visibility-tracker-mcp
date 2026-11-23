@@ -1,75 +1,100 @@
 # 1Alexander AI Visibility Tracker
 
-A remote MCP server that lets AI assistants such as Claude, Cursor, Hermes, and similar tools talk to the [1Alexander AI Visibility Tracker](https://1alexander.ai/ai-visibility-tracker/mcp).
+A remote [Model Context Protocol](https://modelcontextprotocol.io) server for the [1Alexander AI Visibility Tracker](https://1alexander.ai/ai-visibility-tracker/mcp). AI assistants can connect over Streamable HTTP, sign in with OAuth, and explore how AI answers mention your brand, cite sources, and recommend competitors.
 
-This repository contains the public listing and install docs for the hosted server. It is not the private tracker application source.
+This repository is the public listing and install docs for the hosted server. It is not the tracker application source.
 
-## Connection
+## Connect with OAuth
 
 - **Endpoint:** `https://1alexander.ai/ai-visibility-tracker/api/mcp`
-- **Transport:** remote, stateless Streamable HTTP (JSON). Send requests with POST; this is not a stdio server.
-- **Authentication:** optional workspace API key, supplied only in the `Authorization` header as `Authorization: Bearer 1at_…`.
+- **Transport:** remote, stateless Streamable HTTP. Send JSON-RPC with `POST`. This is not a stdio server.
+- **Authentication:** OAuth 2.1 with dynamic client registration. Sign in to 1Alexander with your email code, choose a workspace, and approve access.
 
-Free is available, and Pro is coming. With a workspace key, Free can use the visibility and prompt tools for ChatGPT, the last 8 weeks, and up to 10 prompts. Tools marked Pro below require Pro access.
+MCP is available on Free. Free includes 6 prompts checked weekly on ChatGPT, Gemini, and Perplexity. Pro is $49/month, with daily checks on all five engines (ChatGPT, Gemini, Google AI Overviews, Perplexity, and Grok).
 
-Without an Authorization header, callers connect anonymously and see exactly one tool: `check_prompt`. Calling it returns a polite message that a Pro workspace API key is required to queue a check. Anonymous callers cannot see any brand's data, add prompts, or trigger AI checks.
+Clients that support custom headers can also connect with a workspace API key. Create or manage keys under [Integrations](https://1alexander.ai/ai-visibility-tracker/app/integrations). Send the key as `Authorization: Bearer 1at_…`. Do not put credentials in the URL.
 
-## Create a workspace key first
-
-A workspace owner or admin can create a key at [MCP settings](https://1alexander.ai/ai-visibility-tracker/app/settings/mcp), also linked as **Manage MCP keys** on the [public MCP page](https://1alexander.ai/ai-visibility-tracker/mcp). A verified email and the Free plan are enough to create a key.
-
-Keep the key private and save it in an environment variable called `TRACKER_MCP_KEY`. Never paste it into a URL or an “OAuth client secret” box. Keys are shown once, can be revoked, and only see their own workspace. Each workspace can have at most 20 active keys.
-
-Query-string credentials (for example, `?api_key=`) are rejected with HTTP 400. A bad or revoked key returns HTTP 401 and does not fall back to anonymous access.
-
-## Tools
-
-1. **get_visibility**: how often your brand is mentioned (mention rate), your average ranking position and the week-over-week change, by engine and by week (Free: ChatGPT, last 8 weeks).
-2. **list_prompts**: the questions you track, with their IDs, brand IDs, type and whether they're active.
-3. **add_prompt**: add a new tracked question to a brand (commercial, competitor or branded), within the 10 (Free) or 50 (Pro) limit; warns if the question names your own brand.
-4. **get_citations (Pro)**: the web pages and domains AI answers cited most, with counts.
-5. **competitor_gap (Pro)**: saved answers where a competitor was mentioned and your brand wasn't, optionally filtered to one competitor.
-6. **check_prompt (Pro; the only tool anonymous callers see)**: queue a fresh ChatGPT re-run of an existing tracked prompt, using its exact text and exact brand name. The result shows up later.
+Registry manifest: [https://1alexander.ai/ai-visibility-tracker/server.json](https://1alexander.ai/ai-visibility-tracker/server.json)
 
 ## Client setup
 
-Create a key first using the instructions above. The authenticated examples below read your private key from `TRACKER_MCP_KEY`.
+### ChatGPT
 
-### Claude Code (desktop command line)
+1. If the 1Alexander directory listing is available, open it and select Install.
+2. For custom setup, select **+ → Add custom MCP server**. Enter **1Alexander** and the server URL above. Choose OAuth with dynamic client registration. Review the risk warning, check **I understand and want to continue**, then select **Create as a plugin** and install it.
+3. Sign in to 1Alexander with your email code, choose a workspace and approve access. In a new chat, type `@` and select the plugin.
 
-```sh
-claude mcp add --transport http 1alexander https://1alexander.ai/ai-visibility-tracker/api/mcp --header "Authorization: Bearer $TRACKER_MCP_KEY"
-```
+If you don’t see the custom-server option, check your ChatGPT workspace plan and permissions. Full MCP support is available on ChatGPT web for Business, Enterprise and Edu. ChatGPT Pro can connect custom servers with read and fetch permissions. Ask a workspace admin or owner to set up the plugin or grant creation access where supported.
 
-Then type `/mcp` in Claude Code to check it's connected.
+### Claude
+
+1. In Claude web or Desktop, go to **Customize → Connectors → Add custom connector**. On a managed workspace, an administrator may need to add it first.
+2. Enter **1Alexander** and the server URL above. Choose **Sign in now** and **Register automatically** when prompted for an OAuth client.
+3. Connect, sign in to 1Alexander, choose a workspace and approve access. Enable the connector from your conversation’s tools menu.
 
 ### Cursor
 
-Add this to your private `.cursor/mcp.json` (or your user MCP settings), set `TRACKER_MCP_KEY` before starting Cursor, and enable the server:
+Add the server to your global or project MCP configuration. Open Cursor’s MCP settings and connect to authorize your workspace.
 
 ```json
-{ "mcpServers": { "1alexander": { "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp", "headers": { "Authorization": "Bearer ${env:TRACKER_MCP_KEY}" } } } }
+{
+  "mcpServers": {
+    "1Alexander": {
+      "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp"
+    }
+  }
+}
 ```
 
-### Claude Desktop / Claude web
+### Other clients
 
-Add `https://1alexander.ai/ai-visibility-tracker/api/mcp` under **Settings → Connectors**. Like ChatGPT, this is anonymous only for now; use Claude Code for account tools until OAuth exists.
-
-### Generic / other clients
-
-For clients that support a remote URL and Authorization header with environment-variable substitution:
+Add a remote MCP server using Streamable HTTP and the server URL above. Choose OAuth if your client supports dynamic registration. Clients that support custom headers can connect with a workspace API key:
 
 ```json
-{ "mcpServers": { "1alexander": { "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp", "headers": { "Authorization": "Bearer ${env:TRACKER_MCP_KEY}" } } } }
+{
+  "mcpServers": {
+    "1Alexander": {
+      "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:TRACKER_MCP_KEY}"
+      }
+    }
+  }
+}
 ```
 
-### Hermes
+## Tools
 
-Add the same address and Authorization Bearer header to `~/.hermes/config.yaml` under `mcp_servers`. Put `TRACKER_MCP_KEY` in `~/.hermes/.env`, then restart Hermes.
+All 17 tools are listed below. `check_prompt`, `get_citations`, and `competitor_gap` require Pro.
 
-## Links and contact
+| Tool | What it does |
+| --- | --- |
+| `get_account` | Read plan, capacity, cadence and activity. No quota cost. |
+| `list_engines` | List engines and plan cadence. |
+| `list_brands` | List workspace brands with IDs, domains and tracked prompt counts, including inactive prompts. |
+| `create_brand` | Create a brand. Free: 1 brand. Pro: 3 brands. |
+| `update_brand` | Update a workspace brand by ID, name or domain. |
+| `list_prompts` | List tracked prompts, optionally for one brand. Inactive prompts count toward plan capacity. |
+| `add_prompt` | Add a tracked prompt (commercial by default). Use type `branded` for a question that names the brand. Free: 6 prompts. Pro: 50. |
+| `update_prompts` | Pause, resume or delete prompts. Delete requires `confirm: true`; otherwise the tool returns a preview. Paused prompts still use capacity; deleted prompts free it. |
+| `suggest_prompts` | Free template-only suggestions. No model calls and no saved slots. Adapt them and confirm wording before `add_prompt`. |
+| `get_prompt_answers` | Read stored answers, named brands and citations. Default `detail` is `compact`. This tool never runs a model. Free supports ChatGPT, Gemini and Perplexity. |
+| `get_visibility` | Summarize unbranded visibility and brand knowledge from saved weekly results. |
+| `list_competitors` | List manually tracked competitors for a brand. |
+| `add_competitor` | Track a competitor. Free: 3 per brand. Pro: 100. |
+| `remove_competitor` | Remove a tracked competitor. Stored answer evidence is kept. |
+| `get_citations` | Pro. Cited URLs, domains, titles and occurrence counts from saved successful answers. |
+| `competitor_gap` | Pro. Saved answers where a recognized competitor is mentioned and your brand is absent. |
+| `check_prompt` | Pro. Queue a ChatGPT re-run of an active tracked prompt using its exact brand name. Uses shared re-run and spend limits and returns queue status. |
+
+`brand_id` arguments accept a brand ID, exact name, or domain.
+
+### Can I run a live check?
+
+The `check_prompt` tool accepts an active tracked prompt and its exact brand name for ChatGPT re-runs. Requests default to paused. When enabled, verified Pro workspaces can queue re-runs within the shared limit of 30 per month. The same prompt is deduplicated for ten minutes. The scheduler runs the checks within the existing spend limits.
+
+## Support
 
 - [MCP documentation](https://1alexander.ai/ai-visibility-tracker/mcp)
-- [1Alexander](https://1alexander.ai)
-- Contact: [jake@1alexander.ai](mailto:jake@1alexander.ai)
-- Location: Sheridan, Wyoming, USA
+- [1Alexander](https://1alexander.ai/ai-visibility-tracker)
+- Email [support@1alexander.ai](mailto:support@1alexander.ai) for help connecting or revoking access
