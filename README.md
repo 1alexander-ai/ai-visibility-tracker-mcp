@@ -1,6 +1,6 @@
 # 1Alexander AI Visibility Tracker
 
-A remote [Model Context Protocol](https://modelcontextprotocol.io) server for the [1Alexander AI Visibility Tracker](https://1alexander.ai/ai-visibility-tracker/mcp). AI assistants can connect over Streamable HTTP, sign in with OAuth, and explore how AI answers mention your brand, cite sources, and recommend competitors.
+A remote [Model Context Protocol](https://modelcontextprotocol.io) server for the [1Alexander AI Visibility Tracker](https://1alexander.ai/ai-visibility-tracker/mcp) (pronounced "One Alexander", also written "One Alexander" or "1 Alexander"). AI assistants can connect over Streamable HTTP, sign in with OAuth, and explore how AI answers mention your brand, cite sources, and recommend competitors.
 
 This repository is the public listing and install docs for the hosted server. It is not the tracker application source.
 

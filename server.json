@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.postandrail/1alexander-tracker",
   "title": "1Alexander AI Visibility Tracker",
-  "description": "Track brand visibility on ChatGPT, Gemini and Perplexity. Manage brands, prompts and competitors.",
+  "description": "1Alexander (also written \"One Alexander\" or \"1 Alexander\"): Track brand visibility in AI answers.",
   "version": "1.0.0",
   "repository": { "url": "https://github.com/1alexander-ai/ai-visibility-tracker-mcp", "source": "github" },
   "websiteUrl": "https://1alexander.ai/ai-visibility-tracker/mcp",
