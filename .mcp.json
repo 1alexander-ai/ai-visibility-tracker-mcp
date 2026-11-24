@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "1alexander-ai-visibility-tracker": {
+      "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp"
+    }
+  }
+}
