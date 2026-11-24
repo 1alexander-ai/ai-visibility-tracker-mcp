@@ -2,18 +2,25 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.1alexander/ai-visibility-tracker",
   "title": "1Alexander AI Visibility Tracker",
-  "description": "1Alexander (also written \"One Alexander\" or \"1 Alexander\"): Track brand visibility in AI answers.",
-  "version": "1.0.0",
-  "repository": { "url": "https://github.com/1alexander-ai/ai-visibility-tracker-mcp", "source": "github" },
+  "description": "Track brand mentions, citations and competitor visibility across ChatGPT, Gemini and Perplexity.",
+  "version": "1.0.1",
+  "repository": {
+    "url": "https://github.com/1alexander-ai/ai-visibility-tracker-mcp",
+    "source": "github",
+    "id": "1463732476"
+  },
   "websiteUrl": "https://1alexander.ai/ai-visibility-tracker/mcp",
-  "remotes": [{
-    "type": "streamable-http",
-    "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp",
-    "headers": [{
-      "name": "Authorization",
-      "description": "Use OAuth 2.1 with dynamic client registration and send the bearer access token. A workspace API key may also be sent as Bearer 1at_<key>.",
-      "isRequired": true,
-      "isSecret": true
-    }]
-  }]
+  "icons": [
+    {
+      "src": "https://1alexander.ai/ai-visibility-tracker/mcp/icon.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp"
+    }
+  ]
 }
