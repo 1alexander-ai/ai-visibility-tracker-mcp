@@ -1,8 +1,9 @@
 {
   "name": "1alexander-ai-visibility-tracker",
+  "displayName": "1Alexander AI Visibility Tracker",
   "description": "Connect to the 1Alexander (One Alexander) AI Visibility Tracker remote MCP server to track brand mentions, citations, and competitor gaps across AI answers.",
   "version": "1.0.0",
-  "author": { "name": "1Alexander", "email": "support@1alexander.ai" },
+  "author": { "name": "1Alexander", "email": "support@1alexander.ai", "url": "https://1alexander.ai" },
   "homepage": "https://1alexander.ai/ai-visibility-tracker/mcp",
   "repository": "https://github.com/1alexander-ai/ai-visibility-tracker-mcp",
   "license": "MIT",

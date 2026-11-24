@@ -38,6 +38,7 @@ Copy the server entry from the repository’s [`.mcp.json`](.mcp.json) into `~/.
 {
   "mcpServers": {
     "1alexander-ai-visibility-tracker": {
+      "type": "http",
       "url": "https://1alexander.ai/ai-visibility-tracker/api/mcp"
     }
   }
