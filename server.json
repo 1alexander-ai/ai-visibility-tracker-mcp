@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.postandrail/1alexander-tracker",
+  "name": "ai.1alexander/ai-visibility-tracker",
   "title": "1Alexander AI Visibility Tracker",
   "description": "1Alexander (also written \"One Alexander\" or \"1 Alexander\"): Track brand visibility in AI answers.",
   "version": "1.0.0",
