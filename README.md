@@ -99,3 +99,7 @@ The `check_prompt` tool accepts an active tracked prompt and its exact brand nam
 - [1Alexander](https://1alexander.ai/)
 - [Privacy policy](https://1alexander.ai/ai-visibility-tracker/privacy)
 - Email [support@1alexander.ai](mailto:support@1alexander.ai) for help connecting or revoking access
+
+## Marketplace listings
+
+`lhm.plugin.json` is the LobeHub Market manifest for 1Alexander. After a tool change, regenerate it with `lhm plugin init --url https://1alexander.ai/ai-visibility-tracker/api/mcp` and publish it with `lhm plugin update`.
